@@ -19,12 +19,5 @@
     "description": "Example expense #3 from Alice",
     "payer": "Alice",
     "amount": 2
-  },
-  {
-    "id": "4",
-    "description": "New Laptop",
-    "payer": "Alice",
-    "amount": 1200,
-    "date": "2024-10-01"
   }
 ]

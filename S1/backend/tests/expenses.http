@@ -12,3 +12,6 @@ Content-Type: application/json
     "amount": 1200.00,
     "date": "2024-10-01"
 }
+
+### POST reset expenses
+POST http://localhost:3000/expenses/reset
