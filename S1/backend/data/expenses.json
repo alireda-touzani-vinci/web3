@@ -19,5 +19,26 @@
     "description": "Example expense #3 from Alice",
     "payer": "Alice",
     "amount": 2
+  },
+  {
+    "id": "1758900293017",
+    "payer": "Alice",
+    "amount": 62.79,
+    "description": "Chocolat",
+    "date": "1758900293017"
+  },
+  {
+    "id": "1758900315430",
+    "payer": "Bob",
+    "amount": 28.54,
+    "description": "Pomme",
+    "date": "1758900315430"
+  },
+  {
+    "id": "1758900317917",
+    "payer": "Alice",
+    "amount": 65.34,
+    "description": "Pomme",
+    "date": "1758900317917"
   }
 ]
