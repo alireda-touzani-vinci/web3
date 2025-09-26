@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import ExpenseItem from "../components/ExpenseItem";
 import type { Expense } from "../Types/Expense";
 import ExpenseAdd from "../components/ExpenseAdd";
+import ExpenseReset from "../components/ExpenseReset";
 
 /*const itemsDefault: Expense[] = [
   {
@@ -31,17 +32,17 @@ import ExpenseAdd from "../components/ExpenseAdd";
 const Home = () => {
   const [items, setItems] = useState<Expense[]>([]);
 
-  useEffect(() => {
-    async function fetchExpenses() {
-      try {
-        const response = await fetch("http://localhost:3000/expenses");
-        const data = await response.json();
-        setItems(data);
-      } catch (err) {
-        console.error("Fetch error: ", err);
-      }
+  const fetchExpenses = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/expenses");
+      const data = await response.json();
+      setItems(data);
+    } catch (err) {
+      console.error("Fetch error: ", err);
     }
+  };
 
+  useEffect(() => {
     fetchExpenses();
   }, []);
 
@@ -62,7 +63,10 @@ const Home = () => {
         <p>No Expenses yet</p>
       )}
 
-      <ExpenseAdd handleAdd={handleAdd} />
+      <div style={{ display: "inline-flex", gap: "10px" }}>
+        <ExpenseAdd handleAdd={handleAdd} />
+        <ExpenseReset handleReset={fetchExpenses} />
+      </div>
     </div>
   );
 };
