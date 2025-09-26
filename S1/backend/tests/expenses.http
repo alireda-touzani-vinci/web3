@@ -1,0 +1,14 @@
+### GET all expenses
+GET http://localhost:3000/expenses
+
+### POST a new expense
+POST http://localhost:3000/expenses
+Content-Type: application/json
+
+{
+    "id" : "4",
+    "description": "New Laptop",
+    "payer": "Alice",
+    "amount": 1200.00,
+    "date": "2024-10-01"
+}

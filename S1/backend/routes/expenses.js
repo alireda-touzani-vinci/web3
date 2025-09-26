@@ -16,7 +16,6 @@ router.post("/", (req, res) => {
   } else {
     res.status(500).json({ error: "Impossible to add the expense" });
   }
-  req.accepted();
 });
 
 module.exports = router;

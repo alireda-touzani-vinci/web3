@@ -17,7 +17,7 @@ addExpense = (expense) => {
   try {
     const expenses = getAllExpenses();
     expenses.push(expense);
-    fs.writeFileSync(dataFilePath, JSON.stringify(expense, null, 2));
+    fs.writeFileSync(dataFilePath, JSON.stringify(expenses, null, 2));
     return expense;
   } catch (err) {
     console.error("Error writing : ", err);
