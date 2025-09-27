@@ -1,59 +1,52 @@
-import { useState } from "react";
-import type { Expense } from "../types/Expense";
+import type { Expense, ExpenseInput } from "../types/Expense";
+import { useForm } from "react-hook-form";
 
 interface ExpenseAddProps {
   addExpense: (expense: Expense) => void;
 }
 
+type FormData = ExpenseInput;
+
 export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
-  const [payer, setPayer] = useState("Alice");
-  const [date, setDate] = useState("");
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
+  const onSubmit = (data: FormData) => {
     const newExpense: Expense = {
-      id: Date.now().toString(),
-      date,
-      description,
-      payer,
-      amount: parseFloat(amount),
+      id: Date.now().toString(), // l’API devrait gérer ça, mais pour l’instant on simule
+      ...data,
     };
 
     console.log("Form data:", newExpense);
 
+    // étape 1 : affichage
+    // étape 2 : appel API ou addExpense
     addExpense(newExpense);
-
-    setDate("");
-    setDescription("");
-    setAmount("");
-    setPayer("Alice");
   };
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label>
             Payer:
-            <select value={payer} onChange={(e) => setPayer(e.target.value)}>
+            <select {...register("payer", { required: true })}>
               <option value="Alice">Alice</option>
               <option value="Bob">Bob</option>
             </select>
           </label>
+          {errors.payer && <span style={{ color: "red" }}>Required</span>}
         </div>
 
         <div>
           <label>
             Date:
-            <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
+            <input type="date" {...register("date", { required: true })} />
           </label>
+          {errors.date && <span style={{ color: "red" }}>Required</span>}
         </div>
 
         <div>
@@ -61,10 +54,12 @@ export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
             Description:
             <input
               type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              {...register("description", { required: true, minLength: 3 })}
             />
           </label>
+          {errors.description && (
+            <span style={{ color: "red" }}>Min 3 characters</span>
+          )}
         </div>
 
         <div>
@@ -73,10 +68,16 @@ export default function ExpenseAdd({ addExpense }: ExpenseAddProps) {
             <input
               type="number"
               step="0.01"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
+              {...register("amount", {
+                required: true,
+                min: 0.01,
+                valueAsNumber: true,
+              })}
             />
           </label>
+          {errors.amount && (
+            <span style={{ color: "red" }}>Must be greater than 0</span>
+          )}
         </div>
 
         <button type="submit">Add expense</button>
