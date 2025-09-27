@@ -1,3 +1,4 @@
 node_modules/
 data/expenses.json
 .env
+/generated/prisma
